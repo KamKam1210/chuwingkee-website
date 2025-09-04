@@ -134,7 +134,7 @@
             transform: translate(-50%, -50%);
             width: 450px;
             height: 450px;
-            opacity: 0.4;
+            opacity: 0.45;
             pointer-events: none;
             animation: breathe 8s ease-in-out infinite;
             z-index: 1;
@@ -502,6 +502,166 @@
             transform: rotate(360deg);
         }
 
+        /* Mid-Autumn Festival Section */
+        .midautumn-section {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, #FFF8E7 0%, #FFE4C4 100%);
+            min-height: 100vh;
+        }
+
+        .back-button {
+            background: var(--gold);
+            color: var(--dark);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: var(--primary-red);
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        .midautumn-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .midautumn-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .midautumn-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .midautumn-card.special {
+            grid-column: span 2;
+            background: linear-gradient(135deg, #FFF 0%, #FFF8E7 100%);
+            border: 2px solid var(--gold);
+        }
+
+        .midautumn-image {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .price-tag {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: white;
+            color: var(--primary-red);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .price-tag.special {
+            background: var(--gold);
+            color: var(--dark);
+        }
+
+        .badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-red);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 15px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .midautumn-info {
+            padding: 2rem;
+        }
+
+        .midautumn-info h3 {
+            color: var(--dark);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .midautumn-desc {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .features-list li {
+            padding: 5px 0;
+            color: #555;
+        }
+
+        .order-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gold);
+            color: var(--dark);
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .order-btn:hover {
+            background: var(--primary-red);
+            color: white;
+            transform: scale(1.02);
+        }
+
+        .order-btn.special {
+            background: linear-gradient(135deg, var(--primary-red), var(--gold));
+            color: white;
+        }
+
+        .order-notice {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 3rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .order-notice h3 {
+            color: var(--primary-red);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .order-notice p {
+            color: #666;
+            line-height: 1.8;
+        }
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .nav-links {
@@ -738,6 +898,26 @@
             navLinks.classList.toggle('active');
         }
 
+        // Show Mid-Autumn Festival section
+        function showMidAutumn() {
+            document.getElementById('midautumn').style.display = 'block';
+            document.getElementById('products').style.display = 'none';
+            document.getElementById('about').style.display = 'none';
+            document.getElementById('features').style.display = 'none';
+            document.getElementById('contact').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Hide Mid-Autumn Festival section
+        function hideMidAutumn() {
+            document.getElementById('midautumn').style.display = 'none';
+            document.getElementById('products').style.display = 'block';
+            document.getElementById('about').style.display = 'block';
+            document.getElementById('features').style.display = 'block';
+            document.getElementById('contact').style.display = 'block';
+            document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+        }
+
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -786,13 +966,14 @@
             hero.style.transform = `translateY(${scrolled * 0.5}px)`;
         });
 
-        // Add hover effect to product cards
-        document.querySelectorAll('.product-card').forEach(card => {
+        // Add hover effect to product cards (except the mid-autumn one)
+        document.querySelectorAll('.product-card').forEach((card, index) => {
             card.addEventListener('click', function() {
-                alert('產品詳情頁面開發中...\nProduct details page under development...');
+                if (index !== 1) { // Skip the second card (Mid-Autumn)
+                    alert('產品詳情頁面開發中...\nProduct details page under development...');
+                }
             });
         });
     </script>
 </body>
 </html>
-
